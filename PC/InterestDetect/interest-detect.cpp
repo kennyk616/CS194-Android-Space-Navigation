@@ -28,7 +28,18 @@ int main ( int argc, const char **argv )
 		cap >> frame;
 
 		cv::flip(frame, frame, 1);
-		cv::imshow("mywindow", frame);
+
+		cv::ORB orb;
+		cv::Mat grey1, desc1;
+		vector<cv::KeyPoint> kp1;
+
+		grey1 = frame;
+
+		orb(grey1, cv::Mat(), kp1, desc1);
+		cv::Mat img_kp1;
+		cv::drawKeypoints(grey1, kp1, img_kp1, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT);
+
+		cv::imshow("mywindow", img_kp1);
 
 		if ((cvWaitKey(10) & 255) == 27) // ESC
 			break;
