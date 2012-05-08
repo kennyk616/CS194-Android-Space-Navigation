@@ -29,11 +29,13 @@ void displayImage(const char* imageLocation)
   // create a window
   cvNamedWindow("mainWin", CV_WINDOW_AUTOSIZE);
   cvMoveWindow("mainWin", 100, 100);
+
 /*
   // invert the image
   for(i=0;i<height;i++) for(j=0;j<width;j++) for(k=0;k<channels;k++)
     data[i*step+j*channels+k]=255-data[i*step+j*channels+k];
 */
+
   // show the image
   cvShowImage("mainWin", img );
 
