@@ -21,25 +21,47 @@ int main ( int argc, const char **argv )
 
 	// Create a window in which the captured images will be presented
 	cv::namedWindow("mywindow", CV_WINDOW_AUTOSIZE);
+
+	cv::ORB orb;
+	cv::Mat grey1, desc1, grey2, desc2;
+	vector<cv::KeyPoint> kp1, kp2;
+
+	cv::Mat frame1, frame2;
+	cap >> frame2;
+	cv::flip(frame2, frame2, 1);
+	grey2 = frame2;
+	orb(grey2, cv::Mat(), kp2, desc2);
+
 	// Show the image captured from the camera in the window and repeat
 	while (1) {
 		// Get one frame
-		cv::Mat frame;
-		cap >> frame;
+		frame1 = frame2;
+		grey1 = grey2;
+		desc1 = desc2;
+		kp1 = kp2;
+		cap >> frame2;
+		cv::flip(frame2, frame2, 1);
+		grey2 = frame2;
+		orb(grey2, cv::Mat(), kp2, desc2);
 
-		cv::flip(frame, frame, 1);
-
-		cv::ORB orb;
-		cv::Mat grey1, desc1;
-		vector<cv::KeyPoint> kp1;
-
-		grey1 = frame;
-
-		orb(grey1, cv::Mat(), kp1, desc1);
 		cv::Mat img_kp1;
-		cv::drawKeypoints(grey1, kp1, img_kp1, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT);
+//		cv::drawKeypoints(grey1, kp1, img_kp1, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT);
 
-		cv::imshow("mywindow", img_kp1);
+//		cv::FlannBasedMatcher matcher;
+//		std::vector<cv::DMatch> matches;
+//		matcher.match(desc1, desc2, matches);
+
+		cv::BruteForceMatcher<cv::HammingLUT > matcher;
+		vector<cv::DMatch> matches;
+		matcher.match(desc1, desc2, matches);
+
+//		nth_element(matches.begin(), matches.begin()+24, matches.end());
+//		matches.erase(matches.begin()+25, matches.end());
+
+		cv::Mat img_matches;
+		cv::drawMatches( grey1, kp1, grey2, kp2, matches, img_matches );
+
+		cv::imshow("mywindow", img_matches);
 
 		if ((cvWaitKey(10) & 255) == 27) // ESC
 			break;
