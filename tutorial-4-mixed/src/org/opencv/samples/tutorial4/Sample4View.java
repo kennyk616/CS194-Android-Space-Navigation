@@ -7,6 +7,7 @@ import org.opencv.imgproc.Imgproc;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 class Sample4View extends SampleViewBase {
@@ -52,9 +53,21 @@ class Sample4View extends SampleViewBase {
             Imgproc.cvtColor(mYuv, mRgba, Imgproc.COLOR_YUV420sp2RGB, 4);
             FindFeatures(mGraySubmat.getNativeObjAddr(), mRgba.getNativeObjAddr());
             break;
+        case Sample4Mixed.VIEW_MODE_ORB:
+            Imgproc.cvtColor(mYuv, mRgba, Imgproc.COLOR_YUV420sp2RGB, 4);
+            ORBDetect(mGraySubmat.getNativeObjAddr(), mRgba.getNativeObjAddr());
+            break;
         }
 
+        Log.i("SAMPLE4VIEW", ":)");
+        
         Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_8888);
+//        Bitmap bmp = Bitmap.createBitmap(mRgba.cols(), mRgba.rows(), mRgba.type()); Bitmap.Config.ARGB_8888);
+        
+//        Imgproc.cvtColor(mRgba, mRgba, Imgproc.COLOR_);
+//        bmp = Bitmap.createBitmap(result.cols(), result.rows(), Bitmap.Config.ARGB_8888);
+//        Utils.matToBitmap(result, bmp);
+//        mImageView.setImageBitmap(bmp);
 
         if (Utils.matToBitmap(mRgba, bmp))
             return bmp;
@@ -86,6 +99,8 @@ class Sample4View extends SampleViewBase {
     }
 
     public native void FindFeatures(long matAddrGr, long matAddrRgba);
+
+    public native void ORBDetect(long matAddrGr, long matAddrRgba);
 
     static {
         System.loadLibrary("mixed_sample");

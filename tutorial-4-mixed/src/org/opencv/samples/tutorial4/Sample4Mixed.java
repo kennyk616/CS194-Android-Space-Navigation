@@ -14,11 +14,13 @@ public class Sample4Mixed extends Activity {
     public static final int     VIEW_MODE_GRAY     = 1;
     public static final int     VIEW_MODE_CANNY    = 2;
     public static final int     VIEW_MODE_FEATURES = 5;
+    public static final int     VIEW_MODE_ORB = 7;
 
     private MenuItem            mItemPreviewRGBA;
     private MenuItem            mItemPreviewGray;
     private MenuItem            mItemPreviewCanny;
     private MenuItem            mItemPreviewFeatures;
+    private MenuItem            mItemPreviewORB;
 
     public static int           viewMode           = VIEW_MODE_RGBA;
 
@@ -41,6 +43,7 @@ public class Sample4Mixed extends Activity {
         mItemPreviewGray = menu.add("Preview GRAY");
         mItemPreviewCanny = menu.add("Canny");
         mItemPreviewFeatures = menu.add("Find features");
+        mItemPreviewORB = menu.add("ORB Detector");
         return true;
     }
 
@@ -54,6 +57,8 @@ public class Sample4Mixed extends Activity {
             viewMode = VIEW_MODE_CANNY;
         else if (item == mItemPreviewFeatures)
             viewMode = VIEW_MODE_FEATURES;
+        else if (item == mItemPreviewORB)
+            viewMode = VIEW_MODE_ORB;
         return true;
     }
 }
