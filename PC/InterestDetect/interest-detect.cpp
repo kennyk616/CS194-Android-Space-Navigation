@@ -68,7 +68,7 @@ int main ( int argc, const char **argv )
 	// Create a window in which the captured images will be presented
 	cv::namedWindow("mywindow", CV_WINDOW_AUTOSIZE);
 
-	cv::ORB orb;
+	cv::ORB orb (50);
 	cv::Mat grey1, desc1, grey2, desc2;
 	vector<cv::KeyPoint> kp1, kp2;
 
@@ -100,6 +100,7 @@ int main ( int argc, const char **argv )
 		cv::BruteForceMatcher<cv::HammingLUT > matcher;
 		vector<cv::DMatch> matches;
 		matcher.match(desc1, desc2, matches);
+
 
 //		nth_element(matches.begin(), matches.begin()+24, matches.end());
 //		matches.erase(matches.begin()+25, matches.end());
