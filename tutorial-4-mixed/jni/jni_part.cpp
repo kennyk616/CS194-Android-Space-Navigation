@@ -36,7 +36,7 @@ JNIEXPORT void JNICALL Java_org_opencv_samples_tutorial4_Sample4View_ORBDetect(J
 
     vector<KeyPoint> v;
 
-	cv::ORB orb (50);
+	cv::ORB orb;
 	cv::Mat desc;
 	vector<cv::KeyPoint> kp;
 
